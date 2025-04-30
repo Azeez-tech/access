@@ -22,7 +22,8 @@ const studentRouter = Router();
 
 studentRouter.post(
   "/register",
-  upload.single("profilePicture", registerStudent)
+  upload.single("profilePicture"),
+  registerStudent
 );
 studentRouter.post("/login", Login);
 studentRouter.post("/logout", Logout);

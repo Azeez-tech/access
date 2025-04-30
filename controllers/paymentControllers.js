@@ -1,29 +1,26 @@
-import paystack from '../config/paystack.js';
-import Payment from '../model/paymentModel.js';
-import { successResponse, errorResponse } from '../utils/responseHandler.js';
+// import paystack from "../config/flutterwave.js";
+import Payment from "../model/paymentModel.js";
+import { successResponse, errorResponse } from "../utils/responseHandler.js";
 
 export const initializePayment = async (req, res) => {
   try {
     const { email, callback_url, plan, customAmount } = req.body;
-    
-    
+
     if (!email || !callback_url) {
       return errorResponse(res, "Email and callback_url are required", 400);
     }
-    
-    
+
     // Default amount is 5000
     let amount = 5000;
     // If a premium plan is selected, set a higher amount which is the bases for the project
     if (plan && plan === "premium") {
       amount = 7000;
     }
-    
+
     if (customAmount) {
       amount = customAmount;
     }
 
-    
     const payment = await Payment.create({ email, amount, callback_url });
 
     // note this the amount is in  (amount is in kobo)
@@ -64,7 +61,6 @@ export const verifyPayment = async (req, res) => {
 
     payment.status = "success";
     await payment.save();
-    
 
     return successResponse(res, "Payment verified successfully", response.data);
   } catch (error) {

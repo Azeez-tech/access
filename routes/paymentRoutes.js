@@ -1,10 +1,20 @@
-import express from 'express';
-import { initializePayment, verifyPayment } from '../controllers/paymentControllers.js';
+import express from "express";
+// import {
+//   initializePayment,
+//   verifyPayment,
+// } from "../controllers/paymentControllers.js";
 
-const router = express.Router();
+import {
+  initiatePaymentWithBankTransfer,
+  initiatePaymentWithApplePay,
+  verifyPayment,
+} from "../controllers/student.controllers.js";
+import { studentAuth } from "../authentication/auth.js";
 
+const paymentRouter = express.Router();
 
-router.post("/pay", initializePayment);
-router.get("/verify/:reference", verifyPayment);
+paymentRouter.post("/transfer", studentAuth, initiatePaymentWithBankTransfer);
+paymentRouter.post("/apple", studentAuth, initiatePaymentWithApplePay);
+paymentRouter.get("/verify/:reference", verifyPayment);
 
-export default router;
+export default paymentRouter;

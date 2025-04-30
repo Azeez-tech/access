@@ -388,7 +388,6 @@ export const initiatePaymentWithBankTransfer = async (req, res) => {
       return next(error);
     }
 
-    const { email, amount, paymentMethod } = req.body;
     const student = await studentModel.findById(studentId);
 
     if (!student) {
@@ -396,6 +395,8 @@ export const initiatePaymentWithBankTransfer = async (req, res) => {
       res.statusCode = 404;
       return next(error);
     }
+
+    const { email, amount, paymentMethod } = req.body;
 
     // Flutterwave Payment Payload
     const payload = {

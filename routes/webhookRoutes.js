@@ -1,8 +1,8 @@
-import express from 'express';
-import { paystackWebhook } from '../controllers/webhookControllers.js';
+import express from "express";
+import { paystackWebhook } from "../controllers/webhookControllers.js";
 
-const router = express.Router();
+const webhookRouter = express.Router();
 
-router.post("/paystack", paystackWebhook);
+webhookRouter.post("/paystack", paystackWebhook);
 
-export default router;
+export default webhookRouter;
